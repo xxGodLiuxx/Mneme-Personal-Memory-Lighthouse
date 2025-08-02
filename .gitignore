@@ -1,0 +1,155 @@
+# Mneme .gitignore
+
+# Environment Variables
+.env
+.env.local
+.env.production
+
+# Personal Data - NEVER COMMIT
+*.jah_thoughttrace/
+memories.json
+index.json
+serendipity_cache.json
+
+# Personal Configuration
+claude_desktop_config.json
+notion_credentials.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Operating System
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Backup files
+*.bak
+*.backup
+backup_*/
+
+# Personal documents and session files
+SESSION_RESUME_*.md
+CLAUDE_HANDOVER_*.md
+.claude_session/
+claude_reports/
+
+# Sync folders (these should be in user's personal directory)
+Dropbox/
+OneDrive/
+
+# Test files with real data
+test_real_*.py
+*_real_test.*
+
+# Local development
+local_config.json
+debug_*.py
+scratch_*.py
+
+# Documentation builds
+docs/_build/
+site/
+
+# Package builds
+*.tar.gz
+*.zip
+
+# Development databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# Poetry
+poetry.lock
+
+# Secrets
+secrets.json
+api_keys.json
+*.key
+*.pem
+*.crt

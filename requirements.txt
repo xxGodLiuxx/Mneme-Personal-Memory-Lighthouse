@@ -1,0 +1,24 @@
+# Mneme - Personal Memory Lighthouse
+# Core Dependencies
+
+# MCP Framework
+fastmcp>=0.1.0
+
+# Notion API Client
+notion-client>=2.2.1
+
+# Core Python Libraries
+pathlib2>=2.3.7; python_version < '3.4'
+typing-extensions>=4.0.0; python_version < '3.8'
+
+# JSON and Data Handling
+python-dateutil>=2.8.0
+
+# Optional: Enhanced Logging
+colorama>=0.4.6
+
+# Optional: Environment Variables
+python-dotenv>=1.0.0
+
+# Development Dependencies (optional)
+# Install with: pip install -r requirements-dev.txt
