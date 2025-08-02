@@ -183,10 +183,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
+- **Original Inspiration**: [zhizhiarv](https://zenn.dev/zhizhiarv/articles/local-memory-mcp-for-claude-desktop) for the foundational concept of local memory MCP for Claude Desktop
 - [Claude Desktop](https://claude.ai/desktop) for providing the MCP platform
 - [FastMCP](https://github.com/jlowin/fastmcp) for the Python MCP framework
 - [Notion](https://notion.so) for the knowledge management platform
 - Greek mythology for inspiring the name "Mneme"
+
+### Special Thanks
+
+This project was inspired by the excellent work of **zhizhiarv** on local memory systems for Claude Desktop. Their [original article](https://zenn.dev/zhizhiarv/articles/local-memory-mcp-for-claude-desktop) provided the foundational concept that evolved into Mneme's hybrid memory approach. We extend our deepest gratitude for their pioneering work in the MCP ecosystem.
 
 ## 📊 Project Status
 
