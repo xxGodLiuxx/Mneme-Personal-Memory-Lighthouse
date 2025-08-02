@@ -1,88 +1,101 @@
-# Mneme - クイックスタートガイド
+# Mneme Quick Start Guide
 
-## 🚀 5分でセットアップ
+**Get Mneme up and running in 5 minutes!**
 
-### 1. 必要なもの
+---
+
+> "Every memory becomes a seed of new creation."  
+> — Start small, grow daily, harvest forever.
+
+---
+
+## 🎯 What is Mneme?
+
+Mneme (mnemosyne) — named after the Greek goddess of memory, mother of the nine Muses. This system preserves and cultivates your daily memories, allowing them to bloom into new creations at unexpected moments.
+
+---
+
+## ⚡ 5-Minute Setup
+
+### Prerequisites
 - Windows 10/11
-- Python 3.10以上（[python.org](https://www.python.org/)からダウンロード）
-- Claude Desktop（インストール済み）
+- Python 3.10 or higher
+- Claude Desktop
 
-### 2. Pythonパッケージのインストール
-```cmd
+### Installation Steps
+
+#### 1. Install Python (2 minutes)
+Download and install from [python.org](https://www.python.org/downloads/).
+
+#### 2. Install Dependencies (30 seconds)
+```bash
 pip install fastmcp
 ```
 
-### 3. ファイルのコピー
-1. `INSTALLATION_FILES`フォルダから`hybrid_memory_mcp.py`を以下にコピー：
-   ```
-   C:\Users\[あなたのユーザー名]\Documents\Mneme\
-   ```
+#### 3. Deploy Files (1 minute)
+1. Create folder: `Documents\Mneme`
+2. Copy `hybrid_memory_mcp.py` to this folder
 
-2. Claude Desktop設定を開く：
-   ```cmd
-   notepad %APPDATA%\Claude\claude_desktop_config.json
-   ```
-
-3. `claude_desktop_config.json`の内容をコピー＆ペースト
-   - `[YOUR_USERNAME]`を実際のユーザー名に置換
-
-### 4. Claude Desktop再起動
-1. タスクトレイのClaudeアイコンを右クリック → 終了
-2. Claude Desktopを起動
-3. **新しい会話を開始**
-
-### 5. 動作確認
-新しいClaude会話で：
-```
-「get_memory_stats を実行して」
+#### 4. Configure Claude Desktop (1 minute)
+Add to your Claude Desktop config file:
+```json
+{
+  "mcpServers": {
+    "memory": {
+      "command": "python",
+      "args": ["C:/Users/YOUR_USERNAME/Documents/Mneme/hybrid_memory_mcp.py"]
+    }
+  }
+}
 ```
 
-成功すれば準備完了！
+#### 5. Restart Claude Desktop (30 seconds)
+Completely quit and restart Claude Desktop.
 
 ---
 
-## 📝 最初の使い方
+## 🚀 First Experience
 
-### 朝のインスピレーション
+### 1. Morning Inspiration
 ```
-「今日のインスピレーションを生成して」
+"Generate today's inspiration"
 ```
+Receive 5 elements combining past memories with new discoveries.
 
-### ランダムな記憶
+### 2. Random Memory
 ```
-「過去の記憶をランダムに見せて」
+"Show me a random memory from the past"
 ```
+Rediscover forgotten memories and gain new insights.
 
-### メモリ保存
+### 3. Save Memory
 ```
-「この内容を保存して」
+"Save this content"
 ```
+Important conversations and discoveries are permanently preserved.
 
 ---
 
-## 🔄 Dropbox同期（オプション）
+## 📱 Multi-Device Sync (Optional)
 
-複数のPCで使う場合：
-1. `setup_dropbox_sync.bat`を管理者権限で実行
-2. 他のPCでも同様の設定
+### Dropbox Setup
+1. Install Dropbox
+2. Move the `mneme_memories.json` file to Dropbox folder
+3. Create a symbolic link:
+```cmd
+mklink "C:\Users\YOUR_USERNAME\Documents\Mneme\mneme_memories.json" "C:\Users\YOUR_USERNAME\Dropbox\Mneme\mneme_memories.json"
+```
 
----
-
-## 📚 詳細情報
-
-- **初期構想**: `01_初期構想書.md`
-- **使い方**: `02_使用ガイド.md`
-- **セットアップ**: `03_セットアップガイド.md`
-- **同期設定**: `04_同期マニュアル.md`
+Now your memories sync across all devices!
 
 ---
 
-## 🌟 Mnemeとは
+## 💡 Next Steps
 
-**Mneme**（ムネーメー）は、ギリシャ神話の記憶の女神から名付けられた、あなたの思考と記憶を永続化するシステムです。
-
-「すべての記憶が、新しい創造の種となる」
+1. **Read the [User Guide](USER_GUIDE.md)** — Master all features
+2. **Check [Sync Guide](SYNC_GUIDE.md)** — Set up multi-device synchronization
+3. **Explore [Architecture](ARCHITECTURE.md)** — Understand the technical design
 
 ---
 
-*Start small, grow daily, harvest forever.*
+**Begin your memory journey today. Small seeds grow into mighty forests.**
