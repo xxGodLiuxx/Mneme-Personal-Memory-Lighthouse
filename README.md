@@ -47,7 +47,7 @@ Mneme is a personal knowledge management system that bridges your past memories 
 
 2. **Clone and setup**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/mneme.git
+   git clone https://github.com/xxGodLiuxx/mneme.git
    cd mneme
    ```
 
@@ -73,32 +73,32 @@ Mneme is a personal knowledge management system that bridges your past memories 
 
 6. **Verify installation**
    ```
-   Type in Claude: "get_memory_stats を実行して"
+   Type in Claude: "Execute get_memory_stats"
    ```
 
 ## 🎯 Basic Usage
 
 ### Morning Routine
 ```
-"今日のインスピレーションを生成して"
+"Generate today's inspiration"
 ```
 Generates 5 search prompts for your Notion databases.
 
 ### Random Discovery
 ```
-"過去の記憶をランダムに見せて"
+"Show me a random memory from the past"
 ```
 Retrieves a random memory with bias toward older entries.
 
 ### Save Insights
 ```
-"この内容を保存して"
+"Save this content"
 ```
 Saves current conversation content to local memory.
 
 ### Context Search
 ```
-"執筆に関連する記憶を検索"
+"Search for memories related to writing"
 ```
 Finds memories related to specific topics.
 
@@ -140,11 +140,11 @@ Finds memories related to specific topics.
 
 ## 📚 Documentation
 
-- **[Initial Concept](docs/01_初期構想書.md)** - Vision and background (Japanese)
-- **[User Guide](docs/02_使用ガイド.md)** - Detailed usage guide (Japanese)  
-- **[Setup Guide](docs/03_セットアップガイド.md)** - Complete setup instructions (Japanese)
-- **[Sync Manual](docs/04_同期マニュアル.md)** - Multi-device configuration (Japanese)
-- **[Quick Start](docs/QUICK_START.md)** - 5-minute setup (Japanese)
+- **[Architecture Guide](docs/ARCHITECTURE.md)** - System design and technical overview
+- **[Installation Guide](docs/INSTALLATION.md)** - Complete setup instructions
+- **[User Manual](docs/USER_GUIDE.md)** - Detailed usage guide and best practices
+- **[Multi-Device Setup](docs/SYNC_GUIDE.md)** - Cross-device synchronization
+- **[Quick Start](docs/QUICK_START.md)** - 5-minute setup guide
 
 ## 🛡️ Security & Privacy
 
@@ -167,7 +167,7 @@ Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTIN
 
 ### Development Setup
 ```bash
-git clone https://github.com/YOUR_USERNAME/mneme.git
+git clone https://github.com/xxGodLiuxx/mneme.git
 cd mneme
 pip install -r requirements.txt
 ```

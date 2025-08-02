@@ -41,7 +41,7 @@ notion_api_key = "secret_xxxxxxxxxxxx"  # Never do this!
 If you discover a security vulnerability in Mneme:
 
 1. **DO NOT** create a public GitHub issue
-2. **Email**: Send details to [your-email@example.com]
+2. **Direct Message**: Send details via GitHub DM to [@xxGodLiuxx](https://github.com/xxGodLiuxx)
 3. **Include**: 
    - Description of the vulnerability
    - Steps to reproduce
