@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Mneme - ハイブリッドメモリMCPサーバー
-ClaudeのネイティブNotion連携と連動して動作
+Hybrid Memory MCP Server
+Works in conjunction with Claude's native Notion integration
 """
 
 import os
@@ -12,17 +12,17 @@ from pathlib import Path
 from typing import List, Dict, Optional, Any
 from fastmcp import FastMCP
 
-# データ保存先
-DATA_DIR = Path.home() / ".jah_thoughttrace"
+# Data storage directory
+DATA_DIR = Path.home() / ".mneme_memory"
 DATA_DIR.mkdir(exist_ok=True)
 MEMORIES_FILE = DATA_DIR / "memories.json"
 INDEX_FILE = DATA_DIR / "index.json"
 SERENDIPITY_FILE = DATA_DIR / "serendipity_cache.json"
 
-# サーバーの初期化
+# Server initialization
 mcp = FastMCP("Mneme - Personal Memory Lighthouse")
 
-# ファイル初期化
+# File initialization
 for file_path in [MEMORIES_FILE, INDEX_FILE, SERENDIPITY_FILE]:
     if not file_path.exists():
         with open(file_path, 'w', encoding='utf-8') as f:
@@ -30,13 +30,13 @@ for file_path in [MEMORIES_FILE, INDEX_FILE, SERENDIPITY_FILE]:
 
 
 def load_json(file_path):
-    """JSONファイルを読み込む"""
+    """Load JSON file"""
     with open(file_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
 def save_json(file_path, data):
-    """JSONファイルに保存"""
+    """Save to JSON file"""
     with open(file_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -50,22 +50,22 @@ async def save_from_notion(
     tags: Optional[List[str]] = None
 ) -> Dict:
     """
-    ClaudeがNotionから取得した情報をローカルメモリに保存
+    Save information retrieved by Claude from Notion to local memory
     
     Args:
-        content: Notionから取得した内容
-        title: ページのタイトル
-        source_db: 取得元のデータベース名（日記、総合メモなど）
-        notion_url: NotionページのURL
-        tags: タグのリスト
+        content: Content retrieved from Notion
+        title: Page title
+        source_db: Source database name (diary, general notes, etc.)
+        notion_url: Notion page URL
+        tags: List of tags
     """
     memories = load_json(MEMORIES_FILE)
     index = load_json(INDEX_FILE)
     
-    # メモリIDの生成
+    # Generate memory ID
     memory_id = f"notion_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
     
-    # メモリオブジェクト作成
+    # Create memory structure
     memory = {
         "id": memory_id,
         "type": "notion_import",
@@ -84,18 +84,18 @@ async def save_from_notion(
         }
     }
     
-    # 保存
+    # Save memory
     memories[memory_id] = memory
     save_json(MEMORIES_FILE, memories)
     
-    # インデックス更新
+    # Update index
     if "notion_imports" not in index:
         index["notion_imports"] = {}
     if source_db not in index["notion_imports"]:
         index["notion_imports"][source_db] = []
     index["notion_imports"][source_db].append(memory_id)
     
-    # タグインデックス
+    # Update tag index
     if "tags" not in index:
         index["tags"] = {}
     for tag in (tags or []):
@@ -108,7 +108,7 @@ async def save_from_notion(
     return {
         "success": True,
         "memory_id": memory_id,
-        "message": f"Notionデータを保存しました: {title}",
+        "message": f"Notion data saved: {title}",
         "summary": memory["content"]["summary"]
     }
 
@@ -116,33 +116,33 @@ async def save_from_notion(
 @mcp.tool()
 async def get_daily_inspiration_prompt() -> Dict:
     """
-    今日のインスピレーションのためのプロンプトを生成
-    ClaudeがNotionから検索する際のガイド
+    Generate daily inspiration prompts
+    Guide for Claude to search Notion
     """
     today = datetime.now()
     prompts = {
         "morning_quote": {
-            "databases": ["フレーズ", "名句集"],
-            "prompt": "今日の朝にふさわしい、インスピレーションを与える言葉を1つ選んでください"
+            "databases": ["Phrases", "Quote Collection"],
+            "prompt": "Find an inspiring quote suitable for this morning"
         },
         "one_year_ago": {
-            "databases": ["日記", "総合メモ"],
+            "databases": ["Diary", "General Notes"],
             "date": (today - timedelta(days=365)).strftime("%Y-%m-%d"),
-            "prompt": f"1年前（{(today - timedelta(days=365)).strftime('%Y年%m月%d日')}）の記録を探してください"
+            "prompt": f"Search for records from one year ago ({(today - timedelta(days=365)).strftime('%Y-%m-%d')})"
         },
         "forgotten_idea": {
-            "databases": ["アイディア集"],
+            "databases": ["Idea Collection"],
             "days_ago": 180,
-            "prompt": "180日以上前の、まだ実現していないアイデアを1つ見つけてください"
+            "prompt": "Find an unrealized idea from 180+ days ago"
         },
         "past_learning": {
             "databases": ["Learning Log"],
             "days_ago": 90,
-            "prompt": "90日以上前の学習記録から、今でも役立つ学びを1つ選んでください"
+            "prompt": "Find a valuable learning from 90+ days ago"
         },
         "creative_seed": {
-            "databases": ["梗概ライティング練習"],
-            "prompt": "過去の創作練習から、新しい物語の種となりそうなものを1つ選んでください"
+            "databases": ["Creative Writing Practice"],
+            "prompt": "Find a past creative exercise that could inspire new stories"
         }
     }
     
@@ -150,17 +150,17 @@ async def get_daily_inspiration_prompt() -> Dict:
         "success": True,
         "date": today.strftime("%Y-%m-%d"),
         "prompts": prompts,
-        "message": "Notion検索用のプロンプトを生成しました",
-        "instruction": "これらのプロンプトを使って、ClaudeのNotion連携で検索してください"
+        "message": "Generated Notion search prompts",
+        "instruction": "Use these prompts to search your Notion databases with Claude's Notion integration"
     }
 
 
 @mcp.tool()
-async def create_serendipity_cache(
+async def cache_serendipity(
     discoveries: List[Dict[str, str]]
 ) -> Dict:
     """
-    セレンディピティ（偶然の発見）をキャッシュ
+    Cache serendipitous discoveries for later retrieval
     
     Args:
         discoveries: [{"content": "...", "source": "...", "date": "..."}]
@@ -179,24 +179,24 @@ async def create_serendipity_cache(
     return {
         "success": True,
         "cached_count": len(discoveries),
-        "message": "セレンディピティをキャッシュしました"
+        "message": "Serendipity cached successfully"
     }
 
 
 @mcp.tool()
 async def get_random_memory(memory_type: Optional[str] = None) -> Dict:
     """
-    ランダムなローカルメモリを取得（過去の発見を呼び起こす）
+    Retrieve a random memory with aging bias (older memories more likely)
     """
     memories = load_json(MEMORIES_FILE)
     
     if not memories:
         return {
             "success": False,
-            "message": "まだメモリが保存されていません"
+            "message": "No memories saved yet"
         }
     
-    # フィルタリング
+    # Filter by type if specified
     filtered_memories = memories
     if memory_type:
         filtered_memories = {
@@ -207,22 +207,22 @@ async def get_random_memory(memory_type: Optional[str] = None) -> Dict:
     if not filtered_memories:
         return {
             "success": False,
-            "message": f"タイプ '{memory_type}' のメモリが見つかりません"
+            "message": f"No memories of type '{memory_type}' found"
         }
     
-    # ランダム選択（古いものを優先）
+    # Apply aging bias (older memories have higher weight)
     memory_list = list(filtered_memories.items())
-    # 重み付け：古いものほど選ばれやすく
+    
     weights = []
     now = datetime.now()
     for _, memory in memory_list:
         created = datetime.fromisoformat(memory["metadata"]["timestamp"])
         days_old = (now - created).days
-        weights.append(days_old + 1)  # 古いほど重みが大きい
+        weights.append(days_old + 1)  # Older = higher weight
     
     selected_key, selected_memory = random.choices(memory_list, weights=weights)[0]
     
-    # アクセスカウント更新
+    # Update access count
     memories[selected_key]["metadata"]["access_count"] += 1
     save_json(MEMORIES_FILE, memories)
     
@@ -230,7 +230,7 @@ async def get_random_memory(memory_type: Optional[str] = None) -> Dict:
         "success": True,
         "memory": selected_memory,
         "days_old": weights[memory_list.index((selected_key, selected_memory))] - 1,
-        "message": "過去の記憶を呼び起こしました"
+        "message": "Retrieved a memory from the past"
     }
 
 
@@ -241,17 +241,17 @@ async def link_claude_conversation(
     related_topics: List[str]
 ) -> Dict:
     """
-    現在のClaude会話の要点を保存
+    Save key points from current Claude conversation
     
     Args:
-        summary: 会話の要約
-        key_insights: 重要な洞察のリスト
-        related_topics: 関連トピック
+        summary: Conversation summary
+        key_insights: List of important insights
+        related_topics: Related topics
     """
     memories = load_json(MEMORIES_FILE)
     index = load_json(INDEX_FILE)
     
-    # 会話メモリの作成
+    # Generate conversation ID
     conversation_id = f"conv_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
     
     memory = {
@@ -273,7 +273,7 @@ async def link_claude_conversation(
     memories[conversation_id] = memory
     save_json(MEMORIES_FILE, memories)
     
-    # トピックインデックス更新
+    # Update topic index
     if "topics" not in index:
         index["topics"] = {}
     for topic in related_topics:
@@ -286,7 +286,7 @@ async def link_claude_conversation(
     return {
         "success": True,
         "conversation_id": conversation_id,
-        "message": "会話の要点を保存しました",
+        "message": "Conversation key points saved",
         "insights_count": len(key_insights)
     }
 
@@ -297,34 +297,34 @@ async def search_by_context(
     limit: int = 5
 ) -> Dict:
     """
-    文脈に基づいてローカルメモリを検索
+    Search memories by context keywords
     """
     memories = load_json(MEMORIES_FILE)
     index = load_json(INDEX_FILE)
     
-    # 簡易的なキーワード抽出
+    # Simple keyword matching
     keywords = context.lower().split()
     
-    # スコアリング
+    # Score memories based on keyword matches
     scores = {}
     for memory_id, memory in memories.items():
         score = 0
         content_lower = json.dumps(memory["content"]).lower()
         
-        # キーワードマッチング
+        # Check content matches
         for keyword in keywords:
             if keyword in content_lower:
                 score += 1
         
-        # メタデータマッチング
+        # Check tag matches (higher weight)
         for tag in memory.get("metadata", {}).get("tags", []):
             if any(keyword in tag.lower() for keyword in keywords):
                 score += 2
-        
+                
         if score > 0:
             scores[memory_id] = score
     
-    # ソートして上位を返す
+    # Sort by relevance score
     sorted_results = sorted(scores.items(), key=lambda x: x[1], reverse=True)[:limit]
     
     results = []
@@ -338,25 +338,25 @@ async def search_by_context(
         "context": context,
         "found": len(results),
         "memories": results,
-        "message": f"{len(results)}件の関連メモリが見つかりました"
+        "message": f"Found {len(results)} related memories"
     }
 
 
 @mcp.tool()
 async def get_memory_stats() -> Dict:
     """
-    メモリシステムの統計情報を取得
+    Get memory system statistics
     """
     memories = load_json(MEMORIES_FILE)
     index = load_json(INDEX_FILE)
     
-    # タイプ別集計
+    # Count by type
     type_counts = {}
     for memory in memories.values():
         memory_type = memory.get("type", "unknown")
         type_counts[memory_type] = type_counts.get(memory_type, 0) + 1
     
-    # 時間分析
+    # Calculate time span
     if memories:
         timestamps = [
             datetime.fromisoformat(m["metadata"]["timestamp"]) 
@@ -379,12 +379,12 @@ async def get_memory_stats() -> Dict:
         "time_span_days": days_span,
         "oldest_memory": oldest.isoformat() if oldest else None,
         "newest_memory": newest.isoformat() if newest else None,
-        "message": "Mnemeメモリシステムの統計情報"
+        "message": "Memory system statistics"
     }
 
 
 if __name__ == "__main__":
     print("Mneme - Personal Memory Lighthouse MCP Server")
-    print("ClaudeのNotion連携と連動して動作します")
-    print(f"データ保存先: {DATA_DIR}")
+    print("Works in conjunction with Claude's Notion integration")
+    print(f"Data storage location: {DATA_DIR}")
     mcp.run()

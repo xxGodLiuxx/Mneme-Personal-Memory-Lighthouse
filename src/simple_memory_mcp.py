@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-シンプルなメモリMCPサーバー（環境変数テスト用）
+Simple Memory MCP Server (for environment variable testing)
 """
 
 import os
@@ -9,97 +9,50 @@ from datetime import datetime
 from pathlib import Path
 from fastmcp import FastMCP
 
-# データ保存先
-DATA_DIR = Path.home() / ".jah_thoughttrace"
+# Data storage directory
+DATA_DIR = Path.home() / ".mneme_memory"
 DATA_DIR.mkdir(exist_ok=True)
 MEMORIES_FILE = DATA_DIR / "simple_memories.json"
 
-# サーバーの初期化
+# Server initialization
 mcp = FastMCP("Simple Memory MCP")
 
-# メモリの初期化
+# Memory initialization
 if not MEMORIES_FILE.exists():
     with open(MEMORIES_FILE, 'w', encoding='utf-8') as f:
-        json.dump({}, f)
+        json.dump([], f)
 
-def load_memories():
+
+@mcp.tool()
+async def save_simple_memory(content: str) -> dict:
+    """Save a simple memory"""
     with open(MEMORIES_FILE, 'r', encoding='utf-8') as f:
-        return json.load(f)
-
-def save_memories(memories):
+        memories = json.load(f)
+    
+    memory = {
+        "id": len(memories) + 1,
+        "content": content,
+        "timestamp": datetime.now().isoformat()
+    }
+    
+    memories.append(memory)
+    
     with open(MEMORIES_FILE, 'w', encoding='utf-8') as f:
         json.dump(memories, f, ensure_ascii=False, indent=2)
+    
+    return {"success": True, "id": memory["id"], "message": "Memory saved"}
+
 
 @mcp.tool()
-async def create_memory(content: str) -> dict:
-    """新しいメモリを作成"""
-    memories = load_memories()
+async def get_all_memories() -> dict:
+    """Get all memories"""
+    with open(MEMORIES_FILE, 'r', encoding='utf-8') as f:
+        memories = json.load(f)
     
-    # タイムスタンプベースのキー
-    key = datetime.now().strftime("memory_%Y%m%d_%H%M%S")
-    
-    memories[key] = {
-        "content": content,
-        "created_at": datetime.now().isoformat(),
-        "accessed": 0
-    }
-    
-    save_memories(memories)
-    
-    return {
-        "success": True,
-        "key": key,
-        "message": f"メモリを作成しました: {key}"
-    }
+    return {"success": True, "memories": memories, "count": len(memories)}
 
-@mcp.tool()
-async def get_memory(key: str) -> dict:
-    """特定のメモリを取得"""
-    memories = load_memories()
-    
-    if key in memories:
-        memory = memories[key]
-        memory["accessed"] += 1
-        save_memories(memories)
-        
-        return {
-            "success": True,
-            "memory": memory
-        }
-    else:
-        return {
-            "success": False,
-            "error": f"メモリが見つかりません: {key}"
-        }
-
-@mcp.tool()
-async def list_memories() -> dict:
-    """すべてのメモリをリスト"""
-    memories = load_memories()
-    
-    return {
-        "success": True,
-        "count": len(memories),
-        "memories": list(memories.keys())
-    }
-
-@mcp.tool()
-async def check_env() -> dict:
-    """環境変数をチェック（デバッグ用）"""
-    notion_key = os.environ.get("NOTION_API_KEY")
-    
-    return {
-        "NOTION_API_KEY_exists": notion_key is not None,
-        "NOTION_API_KEY_length": len(notion_key) if notion_key else 0,
-        "All_env_vars_count": len(os.environ),
-        "Python_executable": os.sys.executable,
-        "Working_directory": os.getcwd()
-    }
 
 if __name__ == "__main__":
-    # デバッグ情報
-    print(f"Simple Memory MCP Server starting...")
-    print(f"Data directory: {DATA_DIR}")
-    print(f"NOTION_API_KEY: {'SET' if os.environ.get('NOTION_API_KEY') else 'NOT SET'}")
-    
+    print("Simple Memory MCP Server")
+    print(f"Data location: {DATA_DIR}")
     mcp.run()

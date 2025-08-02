@@ -265,7 +265,7 @@ Contributors will be:
 - Given credit in relevant documentation
 
 ### Hall of Fame
-- **Creator**: JaH - Original concept and implementation
+- **Creator**: xxGodLiuxx - Original concept and implementation
 - **Contributors**: [Your name could be here!]
 
 ---

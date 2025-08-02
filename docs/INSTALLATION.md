@@ -140,7 +140,7 @@ If automatic sync fails:
 
 2. **Copy Memory Data**
    ```cmd
-   xcopy C:\Users\%USERNAME%\.jah_thoughttrace\* "%USERPROFILE%\Dropbox\Mneme_Memory_Sync\" /E /Y
+   xcopy C:\Users\%USERNAME%\.mneme_memory\* "%USERPROFILE%\Dropbox\Mneme_Memory_Sync\" /E /Y
    ```
 
 3. **Set Up on Other Devices**

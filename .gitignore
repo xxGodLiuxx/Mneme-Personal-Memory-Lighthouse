@@ -6,7 +6,7 @@
 .env.production
 
 # Personal Data - NEVER COMMIT
-*.jah_thoughttrace/
+*.mneme_memory/
 memories.json
 index.json
 serendipity_cache.json

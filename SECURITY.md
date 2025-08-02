@@ -5,7 +5,7 @@
 Mneme is designed as a **personal-use system** with the following security considerations:
 
 ### Data Privacy
-- **Local-First**: All personal memories are stored locally (`~/.jah_thoughttrace/`)
+- **Local-First**: All personal memories are stored locally (`~/.mneme_memory/`)
 - **Optional Sync**: Cloud synchronization via Dropbox is optional and user-controlled
 - **No Telemetry**: No usage data is collected or transmitted
 

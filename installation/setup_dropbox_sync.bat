@@ -1,40 +1,40 @@
 @echo off
 chcp 65001 >nul
 echo ========================================
-echo Mneme Dropbox同期セットアップ
+echo Mneme Dropbox Sync Setup
 echo ========================================
 echo.
 
 cd C:\Users\%USERNAME%
 
-echo Dropboxフォルダを確認中...
+echo Checking Dropbox folder...
 if not exist "%USERPROFILE%\Dropbox" (
-    echo エラー: Dropboxフォルダが見つかりません。
-    echo Dropboxがインストールされていることを確認してください。
+    echo Error: Dropbox folder not found.
+    echo Please ensure Dropbox is installed.
     pause
     exit /b 1
 )
 
-echo 1. Dropboxに同期フォルダを作成中...
+echo 1. Creating sync folder in Dropbox...
 mkdir "%USERPROFILE%\Dropbox\Mneme_Memory_Sync" 2>nul
 
-echo 2. 現在のデータをDropboxにコピー中...
-xcopy .jah_thoughttrace "%USERPROFILE%\Dropbox\Mneme_Memory_Sync" /E /I /Y
+echo 2. Copying current data to Dropbox...
+xcopy .mneme_memory "%USERPROFILE%\Dropbox\Mneme_Memory_Sync" /E /I /Y
 
-echo 3. 元のフォルダを削除中...
-rmdir .jah_thoughttrace /S /Q
+echo 3. Removing original folder...
+rmdir .mneme_memory /S /Q
 
-echo 4. シンボリックリンクを作成中...
-mklink /D .jah_thoughttrace "%USERPROFILE%\Dropbox\Mneme_Memory_Sync"
+echo 4. Creating symbolic link...
+mklink /D .mneme_memory "%USERPROFILE%\Dropbox\Mneme_Memory_Sync"
 
 echo.
 echo ========================================
-echo セットアップ完了！
+echo Setup Complete!
 echo ========================================
 echo.
-echo 次のステップ：
-echo 1. Dropboxの同期が完了するまで待つ
-echo 2. 他のPCで同様の設定を実行
-echo 3. 各PCでClaude Desktopを再起動
+echo Next steps:
+echo 1. Wait for Dropbox sync to complete
+echo 2. Run the same setup on other PCs
+echo 3. Restart Claude Desktop on each PC
 echo.
 pause

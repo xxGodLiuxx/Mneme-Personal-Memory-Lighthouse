@@ -149,7 +149,7 @@ The following tools should appear when ready:
 **Problem**: Data not persisting
 **Solution**:
 1. Check directory permissions
-2. Verify `.jah_thoughttrace` folder exists
+2. Verify `.mneme_memory` folder exists
 3. Test with simple save command
 
 #### Sync Issues

@@ -115,7 +115,7 @@ Finds memories related to specific topics.
          │                       ▼
          │              ┌─────────────────┐
          │              │ Local Storage   │
-         │              │ (~/.jah_thought)│
+         │              │ (~/.mneme_memory)│
          │              └─────────────────┘
          │                       
          ▼                      
@@ -135,7 +135,7 @@ Finds memories related to specific topics.
 3. Each PC needs individual Claude Desktop configuration
 
 ### Manual Sync
-- Data location: `~/.jah_thoughttrace/`
+- Data location: `~/.mneme_memory/`
 - Sync folder: `Dropbox/Mneme_Memory_Sync/`
 
 ## 📚 Documentation

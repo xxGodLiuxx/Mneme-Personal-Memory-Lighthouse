@@ -56,7 +56,7 @@ This script will:
 Check that the following folders exist:
 ```
 %USERPROFILE%\Dropbox\Mneme_Memory_Sync\
-%USERPROFILE%\.jah_thoughttrace\ (linked to above)
+%USERPROFILE%\.mneme_memory\ (linked to above)
 ```
 
 ### Step 2: Secondary Device Setup
@@ -90,21 +90,21 @@ mkdir "%USERPROFILE%\Dropbox\Mneme_Memory_Sync"
 
 ### Step 2: Copy Existing Data (Primary Device Only)
 ```cmd
-xcopy "%USERPROFILE%\.jah_thoughttrace\*" "%USERPROFILE%\Dropbox\Mneme_Memory_Sync\" /E /Y
+xcopy "%USERPROFILE%\.mneme_memory\*" "%USERPROFILE%\Dropbox\Mneme_Memory_Sync\" /E /Y
 ```
 
 ### Step 3: Create Symbolic Links
 ```cmd
 # Remove existing directory (backup first!)
-rmdir "%USERPROFILE%\.jah_thoughttrace" /S /Q
+rmdir "%USERPROFILE%\.mneme_memory" /S /Q
 
 # Create symbolic link
-mklink /D "%USERPROFILE%\.jah_thoughttrace" "%USERPROFILE%\Dropbox\Mneme_Memory_Sync"
+mklink /D "%USERPROFILE%\.mneme_memory" "%USERPROFILE%\Dropbox\Mneme_Memory_Sync"
 ```
 
 ### Step 4: Set Permissions
 ```cmd
-icacls "%USERPROFILE%\.jah_thoughttrace" /grant:r "%USERNAME%:(OI)(CI)F"
+icacls "%USERPROFILE%\.mneme_memory" /grant:r "%USERNAME%:(OI)(CI)F"
 ```
 
 ## Alternative Sync Methods
@@ -114,7 +114,7 @@ icacls "%USERPROFILE%\.jah_thoughttrace" /grant:r "%USERNAME%:(OI)(CI)F"
 #### Setup
 ```cmd
 # Replace Dropbox path with OneDrive path
-mklink /D "%USERPROFILE%\.jah_thoughttrace" "%USERPROFILE%\OneDrive\Mneme_Memory_Sync"
+mklink /D "%USERPROFILE%\.mneme_memory" "%USERPROFILE%\OneDrive\Mneme_Memory_Sync"
 ```
 
 #### Pros
@@ -130,7 +130,7 @@ mklink /D "%USERPROFILE%\.jah_thoughttrace" "%USERPROFILE%\OneDrive\Mneme_Memory
 
 #### Setup
 ```cmd
-cd "%USERPROFILE%\.jah_thoughttrace"
+cd "%USERPROFILE%\.mneme_memory"
 git init
 git add .
 git commit -m "Initial memory data"
@@ -212,7 +212,7 @@ Set up automatic conflict resolution:
 ```cmd
 # Create conflict resolution script
 echo @echo off > resolve_conflicts.bat
-echo for %%f in ("%USERPROFILE%\.jah_thoughttrace\*conflicted*") do (>> resolve_conflicts.bat
+echo for %%f in ("%USERPROFILE%\.mneme_memory\*conflicted*") do (>> resolve_conflicts.bat
 echo   echo Found conflict: %%f >> resolve_conflicts.bat
 echo   rem Add your resolution logic here >> resolve_conflicts.bat
 echo ) >> resolve_conflicts.bat

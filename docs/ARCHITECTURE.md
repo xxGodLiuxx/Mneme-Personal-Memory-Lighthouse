@@ -1,7 +1,7 @@
 # Mneme - Personal Memory Lighthouse Architecture
 
 ## Created: August 2, 2025
-## Author: JaH
+## Author: xxGodLiuxx
 
 ---
 
@@ -49,7 +49,7 @@ Building a system that enables the utilization of past thoughts and memories acr
          │                       ▼
          │              ┌─────────────────┐
          │              │ Local Storage   │
-         │              │ (.jah_thought)  │
+         │              │ (.mneme_memory) │
          │              └─────────────────┘
          │                       
          ▼                      
