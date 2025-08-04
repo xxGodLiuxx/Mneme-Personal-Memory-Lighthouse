@@ -5,7 +5,7 @@ All notable changes to the Mneme - Personal Memory Lighthouse project will be do
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.0] - 2025-01-04
+## [1.2.0] - 2025-08-04
 
 ### Added
 - **New MCP Servers**: Added `hybrid_memory_mcp_fixed.py` and `simple_memory_mcp_fixed.py` with improved error handling
@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Encoding Issues**: Fixed UTF-8 encoding for international users
 - **Configuration**: Clarified Claude Desktop configuration steps
 
-## [1.1.0] - 2025-01-02
+## [1.1.0] - 2025-08-02
 
 ### Added
 - **Daily Summary Generation**: Automatic daily activity summaries
@@ -40,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Memory Persistence**: Fixed issues with memory loss on restart
 - **Timezone Handling**: Proper JST timezone support
 
-## [1.0.0] - 2024-12-28
+## [1.0.0] - 2025-07-28
 
 ### Added
 - **Initial Release**: Core MCP server implementation

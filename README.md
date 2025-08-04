@@ -212,7 +212,7 @@ This project was inspired by the excellent work of **zhizhiarv** on local memory
 
 ## 📊 Project Status
 
-**Current Version**: v1.2.0 (Released: January 2025)
+**Current Version**: v1.2.0 (Released: August 2025)
 
 ### What's New
 - ✅ **Fixed Version MCP Servers**: Improved stability and error handling
