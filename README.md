@@ -82,56 +82,160 @@ Mneme is a personal knowledge management system that bridges your past memories 
    Type in Claude: "Execute get_memory_stats"
    ```
 
-## 🎯 Basic Usage
+## 🎯 Usage Guide
 
-### Morning Routine
+### Quick Setup & First Run
+
+1. **Environment Setup** (Optional)
+   ```bash
+   # Copy environment template
+   cp .env.sample .env
+   
+   # Edit with your settings (optional - defaults work fine)
+   nano .env  # or use your preferred editor
+   ```
+
+2. **Start Using in Claude Desktop**
+   - Open Claude Desktop
+   - Start a new conversation
+   - The MCP server loads automatically if configured correctly
+
+3. **Verify Installation**
+   ```
+   Type: "Execute get_memory_stats"
+   ```
+   You should see memory statistics showing the system is active.
+
+### Core Commands
+
+#### Morning Routine
 ```
 "Generate today's inspiration"
 ```
-Generates 5 search prompts for your Notion databases.
+Generates 5 search prompts for your Notion databases to rediscover past insights.
 
-### Random Discovery
+#### Save Current Conversation
+```
+"Link this conversation to memory"
+```
+Extracts and saves key insights from the current Claude conversation.
+
+#### Random Memory Discovery
 ```
 "Show me a random memory from the past"
 ```
-Retrieves a random memory with bias toward older entries.
+Retrieves a random memory with bias toward older entries (serendipity engine).
 
-### Save Insights
+#### Context-Based Search
 ```
-"Save this content"
+"Search for memories related to [topic]"
 ```
-Saves current conversation content to local memory.
+Example: "Search for memories related to writing techniques"
 
-### Context Search
+#### Daily Summary
 ```
-"Search for memories related to writing"
+"Generate daily summary for today"
 ```
-Finds memories related to specific topics.
+Creates a comprehensive summary of all activities and insights from today.
+
+### Advanced Usage
+
+#### Bulk Import from Notion
+```
+"Import all entries from my diary database"
+```
+Requires Claude's Notion integration to be connected.
+
+#### Memory Management
+```
+"Show memory statistics"
+"Clear memories older than 90 days"
+"Export all memories to JSON"
+```
+
+#### Multi-Device Sync
+```
+"Setup Dropbox sync"
+```
+Configures automatic synchronization across devices.
+
+### Example Workflow
+
+```markdown
+1. Morning: "Generate today's inspiration"
+   → Get 5 prompts to explore your knowledge base
+   
+2. During Work: "Save this insight about [topic]"
+   → Capture important discoveries
+   
+3. End of Day: "Generate daily summary"
+   → Review and consolidate learnings
+   
+4. Weekly: "Show me random memories from the past month"
+   → Rediscover forgotten insights
+```
 
 ## 🏗️ Architecture
 
-**Hybrid Approach**: Leverages Claude's native Notion integration for seamless data access.
+### System Overview
+
+**Hybrid Memory Approach**: Combines local storage with Claude's native Notion integration for a seamless knowledge management experience.
 
 ```
-┌─────────────────┐     ┌─────────────────┐
-│ Claude Desktop  │────▶│  MCP Server     │
-│ (Notion Native) │     │ (Local Memory) │
-└─────────────────┘     └─────────────────┘
-         │                       │
-         │                       ▼
-         │              ┌─────────────────┐
-         │              │ Local Storage   │
-         │              │ (~/.mneme_memory)│
-         │              └─────────────────┘
-         │                       
-         ▼                      
-┌─────────────────┐            
-│ Notion Workspace│            
-│ (Your Personal) │            
-└─────────────────┘            
+┌─────────────────────────────────────────────────────────┐
+│                    User Interaction                      │
+└────────────────────────┬───────────────────────────────┘
+                         │
+┌────────────────────────▼───────────────────────────────┐
+│                  Claude Desktop                         │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │          MCP (Model Context Protocol)            │  │
+│  └──────────────┬─────────────────┬─────────────────┘  │
+│                 │                 │                     │
+│  ┌──────────────▼──────┐ ┌───────▼──────────────────┐ │
+│  │  Notion Integration │ │   Mneme MCP Server       │ │
+│  │    (Built-in)       │ │  (hybrid_memory_mcp.py)  │ │
+│  └──────────────────────┘ └──────────────────────────┘ │
+└─────────────┬────────────────────┬─────────────────────┘
+              │                    │
+    ┌─────────▼─────────┐ ┌───────▼──────────┐
+    │  Notion Workspace │ │  Local Storage   │
+    │  - Diaries        │ │ ~/.mneme_memory/ │
+    │  - Notes          │ │  - memories.json │
+    │  - Ideas          │ │  - index.json    │
+    │  - Projects       │ │  - serendipity/  │
+    └───────────────────┘ └──────────────────┘
+              │                    │
+    ┌─────────▼────────────────────▼─────────┐
+    │         Hybrid Memory System           │
+    │   Seamless integration of cloud &      │
+    │   local data for instant access        │
+    └─────────────────────────────────────────┘
 ```
 
-**Key Advantage**: No need to manage Notion API keys - uses Claude's built-in Notion access.
+### Key Components
+
+1. **MCP Server** (`src/hybrid_memory_mcp.py`)
+   - Handles all memory operations
+   - Manages local storage
+   - Provides tool interface to Claude
+
+2. **Local Storage** (`~/.mneme_memory/`)
+   - Fast access to recent memories
+   - Offline capability
+   - Privacy-first design
+
+3. **Notion Integration**
+   - Leverages Claude's native connection
+   - No API key management needed
+   - Access to your full knowledge base
+
+4. **Serendipity Engine**
+   - Intelligent random memory retrieval
+   - Aging bias algorithm
+   - Cross-temporal connections
+
+**Key Advantage**: Zero-configuration Notion access through Claude's built-in integration.
 
 ## 📦 Available MCP Servers
 
