@@ -8,7 +8,7 @@ import os
 import sys
 import json
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import List, Dict, Optional, Any
 
@@ -78,8 +78,8 @@ async def save_from_notion(
         memories = load_json(MEMORIES_FILE)
         index = load_json(INDEX_FILE)
         
-        # Generate memory ID
-        memory_id = f"notion_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        # Generate memory ID with UTC timestamp
+        memory_id = f"notion_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
         
         # Create memory structure
         memory = {
@@ -91,7 +91,7 @@ async def save_from_notion(
                 "summary": content[:200] + "..." if len(content) > 200 else content
             },
             "metadata": {
-                "timestamp": datetime.now().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "source": f"Notion:{source_db}",
                 "notion_url": notion_url,
                 "tags": tags or [],
@@ -201,7 +201,7 @@ async def cache_serendipity(
         
         today = datetime.now().strftime("%Y-%m-%d")
         cache[today] = {
-            "created_at": datetime.now().isoformat(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
             "discoveries": discoveries,
             "accessed": 0
         }
@@ -256,7 +256,7 @@ async def get_random_memory(memory_type: Optional[str] = None) -> Dict:
         memory_list = list(filtered_memories.items())
         
         weights = []
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         for _, memory in memory_list:
             try:
                 created = datetime.fromisoformat(memory["metadata"]["timestamp"])
@@ -303,7 +303,7 @@ async def link_claude_conversation(
         index = load_json(INDEX_FILE)
         
         # Generate conversation ID
-        conversation_id = f"conv_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        conversation_id = f"conv_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
         
         memory = {
             "id": conversation_id,
@@ -314,7 +314,7 @@ async def link_claude_conversation(
                 "topics": related_topics
             },
             "metadata": {
-                "timestamp": datetime.now().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "source": "Claude Conversation",
                 "importance": 0.8,
                 "access_count": 0

@@ -6,7 +6,7 @@ Simple Memory MCP Server (Fixed Version for environment variable testing)
 import os
 import sys
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 try:
@@ -59,7 +59,7 @@ async def save_simple_memory(content: str) -> dict:
         memory = {
             "id": len(memories) + 1,
             "content": content,
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now(timezone.utc).isoformat()
         }
         
         memories.append(memory)

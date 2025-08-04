@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Path Issues**: Resolved Windows-specific path problems
 - **Encoding Issues**: Fixed UTF-8 encoding for international users
 - **Configuration**: Clarified Claude Desktop configuration steps
+- **Timezone Handling**: All timestamps now use UTC for global compatibility
 
 ## [1.1.0] - 2025-08-02
 

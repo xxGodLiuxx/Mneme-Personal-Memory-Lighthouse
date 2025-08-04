@@ -228,6 +228,7 @@ This project was inspired by the excellent work of **zhizhiarv** on local memory
 - ✅ Multi-OS environment support
 - ✅ Daily summary generation and Notion sync
 - ✅ Session context preservation
+- ✅ UTC-based timestamps for global compatibility
 - 🔄 Multi-language documentation (ongoing)
 - 🔄 Advanced search algorithms (planned)
 - 🔄 Mobile companion app (planned)
