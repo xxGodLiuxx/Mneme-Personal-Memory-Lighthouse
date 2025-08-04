@@ -33,7 +33,7 @@ Mneme is a personal knowledge management system that bridges your past memories 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Windows 10/11
+- Windows 10/11, macOS, or Linux
 - Python 3.10+
 - [Claude Desktop](https://claude.ai/desktop) with Notion integration enabled
 - Notion account (connected to Claude)
@@ -47,23 +47,29 @@ Mneme is a personal knowledge management system that bridges your past memories 
 
 2. **Clone and setup**
    ```bash
-   git clone https://github.com/xxGodLiuxx/mneme.git
-   cd mneme
+   git clone https://github.com/xxGodLiuxx/Mneme-Personal-Memory-Lighthouse.git
+   cd Mneme-Personal-Memory-Lighthouse
    ```
 
 3. **Configure Claude Desktop**
    - Copy `installation/claude_desktop_config.json` content
-   - Edit `%APPDATA%\Claude\claude_desktop_config.json`
+   - Windows: Edit `%APPDATA%\Claude\claude_desktop_config.json`
+   - macOS: Edit `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - Linux: Edit `~/.config/Claude/claude_desktop_config.json`
    - Replace `[YOUR_USERNAME]` with your actual username
    - Update Python path if needed
 
 4. **Place MCP server**
    ```bash
-   # Create directory
-   mkdir C:\Users\USERNAME\Documents\Mneme
+   # Create directory (adjust path for your OS)
+   mkdir ~/Documents/Mneme
    
-   # Copy MCP server
-   copy src\hybrid_memory_mcp.py C:\Users\USERNAME\Documents\Mneme\
+   # Copy MCP server (choose one)
+   # Standard version:
+   cp src/hybrid_memory_mcp.py ~/Documents/Mneme/
+   
+   # Or fixed version (recommended for latest features):
+   cp src/hybrid_memory_mcp_fixed.py ~/Documents/Mneme/
    ```
 
 5. **Restart Claude Desktop**
@@ -126,6 +132,17 @@ Finds memories related to specific topics.
 ```
 
 **Key Advantage**: No need to manage Notion API keys - uses Claude's built-in Notion access.
+
+## 📦 Available MCP Servers
+
+### 1. **Hybrid Memory MCP** (`hybrid_memory_mcp.py`)
+Full-featured server with Notion integration, serendipity engine, and daily summaries.
+
+### 2. **Hybrid Memory MCP Fixed** (`hybrid_memory_mcp_fixed.py`)
+Enhanced version with improved error handling and stability. Recommended for production use.
+
+### 3. **Simple Memory MCP Fixed** (`simple_memory_mcp_fixed.py`)
+Lightweight server for basic memory operations. Perfect for testing and minimal setups.
 
 ## 🔄 Multi-Device Sync
 
@@ -195,11 +212,22 @@ This project was inspired by the excellent work of **zhizhiarv** on local memory
 
 ## 📊 Project Status
 
+**Current Version**: v1.2.0 (Released: January 2025)
+
+### What's New
+- ✅ **Fixed Version MCP Servers**: Improved stability and error handling
+- ✅ **Cross-platform Support**: Full support for Windows, macOS, and Linux
+- ✅ **Enhanced Configuration**: Simplified setup with example configurations
+- ✅ **Simple Memory Server**: Lightweight option for testing and basic usage
+
+### Features
 - ✅ Core MCP server implementation
 - ✅ Basic memory operations (CRUD)
 - ✅ Serendipity and inspiration features  
 - ✅ Dropbox synchronization
-- ✅ Windows environment support
+- ✅ Multi-OS environment support
+- ✅ Daily summary generation and Notion sync
+- ✅ Session context preservation
 - 🔄 Multi-language documentation (ongoing)
 - 🔄 Advanced search algorithms (planned)
 - 🔄 Mobile companion app (planned)
